@@ -11,7 +11,8 @@ This page outlines the tasks and assets associated with a strawman nuclear simul
 * reactor core model (smtk::session::rgg::Resource)
 
 **Software**
-* RGG plugin (generate_mesh.py?)
+* modelbuilder
+  * RGG plugin (generate_mesh.py?)
 * MeshKit (library?)
 * Cubit (application?)
 

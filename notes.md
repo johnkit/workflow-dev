@@ -14,3 +14,6 @@ Current plan is to use either "specify" or "generate" when naming tasks.
 
 * "Specify" implies activities that primarily involve human interaction. An example of this is creating and editing attributes using the CMB user interface.
 * "Generate" implies activities that primarily involve computational resources. An example of this is meshing; although a user invokes the mesher, and possibly provides some top-level settings, the contents of the mesh resource are populated by meshing software.
+
+## Questions
+* Can some task inputs be optional? e.g., DIF3D attributes for MCC3-only simulation

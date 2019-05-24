@@ -1,0 +1,31 @@
+//- Strawman Workflow Specification
+
+doctype xml
+workflow
+  name  NEAMS first demo
+  description  Workflow associated with strawman nuclear simulation
+  tasks
+    task
+      name Specify Geometry
+      type single
+      objective produce the reactor core for simulation
+      inputs/
+      outputs
+        asset
+          name Reactor Core Model
+          type smtk::session::rgg::Resource
+          FileName reactore_core_model.smtk
+      software
+        package
+          name modelbuilder
+          plugins
+            plugin rgg-session
+      help
+        | There are several ways to carry out this task.
+        |  * Create RGG model interactively in modelbuilder, manually defining its geometry (pins, ducts, assemblies, core).
+        |  * Import .rxf file into modelbuilder.
+        |  * Modify the TestModel.h file (?) in RGG session, defining the geomerty to be generated when the program (?) is built and run.
+
+    task
+      name: todo
+      description: todo
