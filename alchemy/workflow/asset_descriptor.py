@@ -24,7 +24,6 @@ class AssetDescriptor(DeclarativeBase):
 
     id = Column(Integer, primary_key=True)
     workflow = ForeignKey('workflows.id')
-    # role = Column(String)
     description = Column(String)
     asset_type = Column(String)  # file, folder, smtk::model::Resource, ...
     workflow_pc = Column(Enum(PCEnum))
@@ -32,4 +31,4 @@ class AssetDescriptor(DeclarativeBase):
     UniqueConstraint('workflow', 'role', 'asset_type', 'workflow_pc')
 
     def __repr__(self):
-        return 'Task {}'.format(self.title)
+        return 'Asset type {}'.format(self.asset_type)

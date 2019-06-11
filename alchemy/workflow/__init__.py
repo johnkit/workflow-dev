@@ -31,7 +31,7 @@ def create(name):
     return None
 
 # Initialize engine and session
-_engine = create_engine('sqlite:///:memory:', echo=False)
+_engine = create_engine('sqlite:///:memory:', echo=False)  # also 'debug'
 DeclarativeBase.metadata.create_all(_engine)
 
 Session = sessionmaker(bind=_engine)
