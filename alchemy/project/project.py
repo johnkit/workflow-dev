@@ -9,3 +9,6 @@ class Project:
 
     def tasks(self):
         return self._workflow.tasks
+
+    def assets(self):
+        return self._workflow.assets
