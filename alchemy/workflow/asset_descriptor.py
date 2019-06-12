@@ -14,6 +14,9 @@ class PCEnum(enum.Enum):
     ProducedAndConsumed = 3
     Both = 3
 
+    def __str__(self):
+        return self.name
+
 
 class AssetDescriptor(DeclarativeBase):
     """Public interface to workflow asset descriptors

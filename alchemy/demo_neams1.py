@@ -1,25 +1,38 @@
 import project
 import workflow
 
+from tabulate import tabulate
+
 wf = workflow.create('neams.1')
 print('Created workflow:  {}'.format(wf))
 
 project = project.Project(wf)
-print('Created project: {}'.format(project))
-
-for t in project.tasks():
-    print('Task {}.  {}'.format(t.id, t.title))
-
-for a in project.assets():
-    role = project.role(a)
-    pc = project.pc(a)
-    print('Asset {}.  {}, {}, {}'.format(a.id, role, pc, a.asset_type))
+print('Initialized project to that workflow')
 
 print()
+print('Workflow Tasks:')
+task_headers = ['Task Id', 'Title', 'Description']
+task_table = [[t.id, t.title, t.description] for t in project.tasks()]
+print(tabulate(task_table, headers=task_headers))
+
+print()
+print('Workflow Assets:')
+asset_headers = ['Asset Id', 'Role', 'P/C', 'Type']
+asset_table = [[a.id, project.role(a), project.pc(a), a.asset_type] for a in project.assets()]
+print(tabulate(asset_table, headers=asset_headers))
+
+print()
+print('Workflow Summary')
+summary_headers = ['Task Id', 'Asset Id', 'Role', 'P/C', 'Type']
+summary_table = None
 for t in project.tasks():
-    print('Task {}. {}'.format(t.id, t.title))
-    for a in t.assets:
-        print('  Asset {} - {}'.format(project.role(a), t.pc(a)))
+    if summary_table is None:
+        summary_table = [[t.id, a.id, project.role(a), t.pc(a), a.asset_type] for a in t.assets]
+    else:
+        summary_table.append([])
+        summary_table += [[t.id, a.id, project.role(a), t.pc(a), a.asset_type] for a in t.assets]
+print(tabulate(summary_table, headers=summary_headers))
+print()
 
 # List task and status/state
 # Add asset(s) to project

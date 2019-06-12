@@ -17,6 +17,10 @@ class Task:
         return self._workflow_task.title
 
     @property
+    def description(self):
+        return self._workflow_task.description
+
+    @property
     def assets(self):
         return self._assets
 
