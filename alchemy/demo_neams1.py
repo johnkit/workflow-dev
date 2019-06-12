@@ -7,20 +7,19 @@ print('Created workflow:  {}'.format(wf))
 project = project.Project(wf)
 print('Created project: {}'.format(project))
 
-tasks = project.tasks()
-for t in tasks:
+for t in project.tasks():
     print('Task {}.  {}'.format(t.id, t.title))
 
-project_assocs = project.assets()
-for a in project_assocs:
-    print('Asset {}.  {}, {}, {}'.format(a.asset.id, a.role, a.pc, a.asset.asset_type))
+for a in project.assets():
+    role = project.role(a)
+    pc = project.pc(a)
+    print('Asset {}.  {}, {}, {}'.format(a.id, role, pc, a.asset_type))
 
 print()
-for t in tasks:
+for t in project.tasks():
     print('Task {}. {}'.format(t.id, t.title))
     for a in t.assets:
-        asset = a.workflow_asset
-        print('  Asset {} - {}'.format(asset.role, a.task_pc))
+        print('  Asset {} - {}'.format(project.role(a), t.pc(a)))
 
 # List task and status/state
 # Add asset(s) to project
