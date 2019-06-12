@@ -7,15 +7,12 @@ from sqlalchemy.schema import UniqueConstraint
 from . import DeclarativeBase
 
 
-class PCEnum(enum.Enum):
+class PCEnum(enum.IntEnum):
     """PC indicates whether assets is Produced and/or Consumed"""
     Consumed = 1
     Produced = 2
     ProducedAndConsumed = 3
     Both = 3
-
-    def __str__(self):
-        return self.name
 
 
 class AssetDescriptor(DeclarativeBase):

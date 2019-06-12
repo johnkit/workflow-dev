@@ -42,3 +42,12 @@ class Project:
     def pc(self, asset):
         """Returns workflow P/C info for asset"""
         return asset.workflow_pc
+
+    def assign_asset(self, role, data):
+        """Assign asset to project role."""
+        for asset in self._assets:
+            if asset.workflow_role == role:
+                asset.set_instance(data)
+                return
+
+        raise RuntimeError('Workflow has no role \"{}\"'.format(role))

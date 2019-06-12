@@ -11,19 +11,19 @@ print('Initialized project to that workflow')
 
 print()
 print('Workflow Tasks:')
-task_headers = ['Task Id', 'Title', 'Description']
+task_headers = ['Id', 'Title', 'Description']
 task_table = [[t.id, t.title, t.description] for t in project.tasks()]
 print(tabulate(task_table, headers=task_headers))
 
 print()
 print('Workflow Assets:')
-asset_headers = ['Asset Id', 'Role', 'P/C', 'Type', 'Description']
+asset_headers = ['Id', 'Role', 'P/C', 'Type', 'Description']
 asset_table = [[a.id, project.role(a), project.pc(a), a.asset_type, a.description] \
     for a in project.assets()]
 print(tabulate(asset_table, headers=asset_headers))
 
 print()
-print('Workflow Summary')
+print('Workflow Summary:')
 summary_headers = ['Task Id', 'Asset Id', 'Role', 'P/C', 'Type']
 summary_table = None
 for t in project.tasks():
@@ -33,9 +33,18 @@ for t in project.tasks():
         summary_table.append([])
         summary_table += [[t.id, a.id, project.role(a), t.pc(a), a.asset_type] for a in t.assets]
 print(tabulate(summary_table, headers=summary_headers))
-print()
 
-# List task and status/state
-# Add asset(s) to project
-# List task and status/state
-# ?Also remove asset from project?
+print()
+print('Task Status:')
+status_headers = ['Task Id', 'Title', 'Ready?']
+status_table = [[t.id, t.title, t.is_ready()] for t in project.tasks()]
+print(tabulate(status_table, headers=status_headers))
+
+project.assign_asset('reactor_geometry', 'data tbd')
+
+print()
+print('After setting reactor geometry:')
+status_headers = ['Task Id', 'Title', 'Ready?']
+status_table = [[t.id, t.title, t.is_ready()] for t in project.tasks()]
+print(tabulate(status_table, headers=status_headers))
+

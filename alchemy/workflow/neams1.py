@@ -13,13 +13,22 @@ def create(session):
     session.add(workflow)
 
     # Create tasks
-    task1 = Task(title='Specify RGG geometry', description='tbd')
+    task1 = Task(title='Specify RGG geometry', description= \
+        """Use modelbuilder and/or scripts to create RGG resource.\n"""
+        """Assign the resulting model resource to the \"reactor_geometry\"\n"""
+        """workflow asset.""")
     workflow.tasks.append(task1)
 
-    task2 = Task(title='Specify MCC simulation')
+    task2 = Task(title='Specify MCC simulation', description= \
+        """Use modelbuilder to create attribute resource and\n"""
+        """specify MCC simulation. Assign the resource to the\n"""
+        """\"mcc_simulation_spec\" asset.""")
     workflow.tasks.append(task2)
 
-    task3 = Task(title='Generate MCC analysis')
+    task3 = Task(title='Generate MCC analysis', description= \
+        """Run MCC analysis by first exporting the simulation data,\n"""
+        """then using PyARC to generate the MCC input deck, and\n"""
+        """then running the MCC analysis code.""")
     workflow.tasks.append(task3)
 
     session.add_all([task1, task2, task3])
@@ -28,23 +37,35 @@ def create(session):
     assoc1 = WorkflowAsset(role='reactor_geometry', pc=PCEnum.Produced)
     assoc1.asset = AssetDescriptor(
         workflow=workflow,
-        asset_type='smtk::session::rgg::Resource'
+        asset_type='smtk::session::rgg::Resource',
+        description='RGG reactor model'
     )
     workflow.assets.append(assoc1)
 
     assoc2 = WorkflowAsset(role='mcc_simulation_spec', pc=PCEnum.Produced)
     assoc2.asset = AssetDescriptor(
         workflow=workflow,
-        asset_type='smtk::attribute::Resource'
+        asset_type='smtk::attribute::Resource',
+        description='MCC analysis specification'
     )
     workflow.assets.append(assoc2)
 
-    assoc3 = WorkflowAsset(role='mcc_simulation_input', pc=PCEnum.Produced)
+    assoc3 = WorkflowAsset(role='mcc_input', pc=PCEnum.Produced)
     assoc3.asset = AssetDescriptor(
         workflow=workflow,
-        asset_type='file'
+        asset_type='file',
+        description='MCC input file'
     )
     workflow.assets.append(assoc3)
+
+    assoc4 = WorkflowAsset(role='mcc_output', pc=PCEnum.Produced)
+    assoc4.asset = AssetDescriptor(
+        workflow=workflow,
+        asset_type='folder',
+        description='MCC output deck'
+    )
+    workflow.assets.append(assoc4)
+
 
     # Assign assets to tasks
     geom_produced = TaskAsset(task_pc=PCEnum.Produced, workflow_asset=assoc1)
@@ -60,8 +81,11 @@ def create(session):
     mcc_atts_consumed = TaskAsset(task_pc=PCEnum.Consumed, workflow_asset=assoc2)
     task3.assets.append(mcc_atts_consumed)
 
-    mcc_sim_input = TaskAsset(task_pc=PCEnum.Produced, workflow_asset=assoc3)
-    task3.assets.append(mcc_sim_input)
+    mcc_input = TaskAsset(task_pc=PCEnum.Produced, workflow_asset=assoc3)
+    task3.assets.append(mcc_input)
+
+    mcc_output = TaskAsset(task_pc=PCEnum.Produced, workflow_asset=assoc4)
+    task3.assets.append(mcc_output)
 
     session.commit()
     return workflow

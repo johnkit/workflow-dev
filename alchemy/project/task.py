@@ -1,6 +1,7 @@
 """
 Project Task, which wraps workflow.Task (database TaskAsset)
 """
+from workflow.asset_descriptor import PCEnum
 
 class Task:
     def __init__(self, workflow_task, project_assets, pc_lookup):
@@ -24,5 +25,22 @@ class Task:
     def assets(self):
         return self._assets
 
-    def pc(self, asset):
-        return self._pc_lookup.get(asset)
+    def pc(self, asset, as_int=False):
+        pc = self._pc_lookup.get(asset)
+        if as_int:
+            return pc
+        # (else)
+        return pc.name  # (string)
+
+    def is_ready(self):
+        """Return boolean indicating whether prerequiste assets are available.
+
+        Later: return tri-state value to indicate that some sub-tasks are ready
+        """
+        as_int = True
+        for asset in self._assets:
+            if bool(self.pc(asset, as_int) & PCEnum.Consumed) and asset.instance is None:
+                return False
+
+        # (else) all consumed assets available, so
+        return True
