@@ -17,8 +17,9 @@ print(tabulate(task_table, headers=task_headers))
 
 print()
 print('Workflow Assets:')
-asset_headers = ['Asset Id', 'Role', 'P/C', 'Type']
-asset_table = [[a.id, project.role(a), project.pc(a), a.asset_type] for a in project.assets()]
+asset_headers = ['Asset Id', 'Role', 'P/C', 'Type', 'Description']
+asset_table = [[a.id, project.role(a), project.pc(a), a.asset_type, a.description] \
+    for a in project.assets()]
 print(tabulate(asset_table, headers=asset_headers))
 
 print()

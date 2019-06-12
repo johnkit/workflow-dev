@@ -28,27 +28,23 @@ def create(session):
     assoc1 = WorkflowAsset(role='reactor_geometry', pc=PCEnum.Produced)
     assoc1.asset = AssetDescriptor(
         workflow=workflow,
-        asset_type='smtk::session::rgg::Resource',
-        workflow_pc=PCEnum.Produced
+        asset_type='smtk::session::rgg::Resource'
     )
     workflow.assets.append(assoc1)
 
     assoc2 = WorkflowAsset(role='mcc_simulation_spec', pc=PCEnum.Produced)
     assoc2.asset = AssetDescriptor(
         workflow=workflow,
-        asset_type='smtk::attribute::Resource',
-        workflow_pc=PCEnum.Produced
+        asset_type='smtk::attribute::Resource'
     )
     workflow.assets.append(assoc2)
 
     assoc3 = WorkflowAsset(role='mcc_simulation_input', pc=PCEnum.Produced)
     assoc3.asset = AssetDescriptor(
         workflow=workflow,
-        asset_type='file',
-        workflow_pc=PCEnum.Produced
+        asset_type='file'
     )
     workflow.assets.append(assoc3)
-
 
     # Assign assets to tasks
     geom_produced = TaskAsset(task_pc=PCEnum.Produced, workflow_asset=assoc1)

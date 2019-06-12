@@ -29,9 +29,9 @@ class AssetDescriptor(DeclarativeBase):
     workflow = ForeignKey('workflows.id')
     description = Column(String)
     asset_type = Column(String)  # file, folder, smtk::model::Resource, ...
-    workflow_pc = Column(Enum(PCEnum))
 
-    UniqueConstraint('workflow', 'role', 'asset_type', 'workflow_pc')
+    # Assets must be unique to a given workflow and role
+    UniqueConstraint('workflow', 'role', 'asset_type')
 
     def __repr__(self):
         return 'Asset type {}'.format(self.asset_type)

@@ -15,6 +15,10 @@ class Asset:
         return self._workflow_asset.asset.asset_type
 
     @property
+    def description(self):
+        return self._workflow_asset.asset.description
+
+    @property
     def workflow_role(self):
         return self._workflow_asset.role
 
