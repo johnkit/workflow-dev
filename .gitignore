@@ -1,1 +1,6 @@
+# Vitual environments
+venv/alchemy/
 venv/sqlalchemy/
+
+# Jupyter notebook stuff
+.ipynb_checkpoints/
